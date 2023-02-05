@@ -27,22 +27,25 @@ const FormUser = () => {
             .includes(query.toLowerCase().replace(/\s+/g, ""))
         );
   const handleClick = (e) => {
-    e.preventDefault()
-    const name = e.target.first_name.value
-    const surname = e.target.last_name.value
-    const url = e.target.website.value
-    console.log(selected,name,surname,url)
-  }
+    e.preventDefault();
+    const name = e.target.first_name.value;
+    const surname = e.target.last_name.value;
+    const url = e.target.website.value;
+    console.log(selected, name, surname, url);
+  };
 
   return (
-    <form onSubmit={handleClick} className="flex flex-col items-center pb-4 border-b-2 border-pinky">
+    <form
+      onSubmit={handleClick}
+      className="flex flex-col items-center pb-4 border-b-2 border-pinky"
+    >
       <div className="grid gap-6 m-4 md:grid-cols-2 w-5/6">
         <div>
           <label
             htmlFor="first_name"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            First name
+            Name
           </label>
           <input
             type="text"
@@ -57,7 +60,7 @@ const FormUser = () => {
             htmlFor="last_name"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            Last name
+            Instagram URL
           </label>
           <input
             type="text"
@@ -67,7 +70,21 @@ const FormUser = () => {
             required
           ></input>
         </div>
-
+        <div>
+          <label
+            htmlFor="last_name"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Twitter URL
+          </label>
+          <input
+            type="text"
+            id="last_name"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Doe"
+            required
+          ></input>
+        </div>
         <div>
           <label
             htmlFor="website"
@@ -159,9 +176,7 @@ const FormUser = () => {
         </div>
       </div>
 
-      <button
-        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-2/3 sm:w-1/3 py-2.5 text-center dark:bg-pinky dark:hover:bg-pink-800 dark:focus:ring-pink-800"
-      >
+      <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-2/3 sm:w-1/3 py-2.5 text-center dark:bg-pinky dark:hover:bg-pink-800 dark:focus:ring-pink-800">
         Submit
       </button>
     </form>
