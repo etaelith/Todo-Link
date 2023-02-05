@@ -1,4 +1,4 @@
-import FormUser from "@/components/FormUser";
+import FormUser from "@/components/User/FormUser";
 import React from "react";
 
 const user = () => {

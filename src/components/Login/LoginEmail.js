@@ -1,8 +1,27 @@
-import React from "react";
-
+import { useState } from "react";
+import { signup } from "@/firebase/client";
 const LoginEmail = () => {
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+  const handleChange = ({ target: { name, value } }) => {
+    setUser({ ...user, [name]: value });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(user);
+    try {
+      await signup(user.email, user.password);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   return (
-    <form className="flex flex-col items-center mx-8 border-b-4 border-pink-800 pb-4">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col items-center mx-8 border-b-4 border-pink-800 pb-4"
+    >
       <div className="mb-6 w-full">
         <label
           htmlFor="email"
@@ -11,10 +30,10 @@ const LoginEmail = () => {
           Your email
         </label>
         <input
-          type="email"
-          id="email"
+          type="text"
+          name="email"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="name@flowbite.com"
+          onChange={handleChange}
           required
         ></input>
       </div>
@@ -27,10 +46,11 @@ const LoginEmail = () => {
         </label>
         <input
           type="password"
-          id="password"
+          name="password"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          onChange={handleChange}
           required
-        ></input>{" "}
+        ></input>
       </div>
       <div className="flex items-start mb-6">
         <div className="flex items-center h-5">
