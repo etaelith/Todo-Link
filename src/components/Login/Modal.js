@@ -1,11 +1,12 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import Buttons from "./Buttons";
 import LoginEmail from "./LoginEmail";
-
+import { LoginContext } from "../../context/UserProvider";
 const Modal = () => {
   let [isOpen, setIsOpen] = useState(false);
 
+  const { logout, user } = useContext(LoginContext);
   function closeModal() {
     setIsOpen(false);
   }
@@ -13,15 +14,19 @@ const Modal = () => {
   function openModal() {
     setIsOpen(true);
   }
-
+  useEffect(() => {
+    if (user) {
+      closeModal();
+    }
+  }, [user]);
   return (
     <>
       <button
         type="button"
-        onClick={openModal}
+        onClick={!user ? openModal : logout}
         className="rounded-md bg-black bg-opacity-20 px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
       >
-        Connect
+        {!user ? "connect" : "LogOut"}
       </button>
 
       <Transition appear show={isOpen} as={Fragment}>
@@ -65,7 +70,9 @@ const Modal = () => {
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
+                      onClick={() => {
+                        closeModal, logout();
+                      }}
                     >
                       Don't want log, thanks!
                     </button>

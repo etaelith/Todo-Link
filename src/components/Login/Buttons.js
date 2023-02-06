@@ -1,24 +1,23 @@
-import {
-  loginWithGitHub,
-  loginWithGoogle,
-  loginWithTwitter,
-} from "../../firebase/client";
+import { useContext} from "react";
+
+import { LoginContext } from "../../context/UserProvider";
+
 const Buttons = ({ children, onClick }) => {
+  const { loginWithGitHub, loginWithGoogle, loginWithTwitter } =
+    useContext(LoginContext);
+
   const handleClick = () => {
-    loginWithGitHub()
-      .then((user) => console.log(user))
-      .catch((err) => console.log(err));
+    loginWithGitHub().catch((err) => console.log(err));
   };
+
   const handleGoogle = () => {
-    loginWithGoogle()
-      .then((user) => console.log(user))
-      .catch((err) => console.log(err));
+    loginWithGoogle().catch((err) => console.log(err));
   };
+
   const handleTwitter = () => {
-    loginWithTwitter()
-      .then((user) => console.log(user))
-      .catch((err) => console.log(err));
+    loginWithTwitter().catch((err) => console.log(err));
   };
+
   return (
     <div className="w-full">
       <button

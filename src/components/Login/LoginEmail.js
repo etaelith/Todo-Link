@@ -1,16 +1,19 @@
-import { useState } from "react";
-import { signup } from "@/firebase/client";
+import { useContext, useState } from "react";
+import { LoginContext } from "../../context/UserProvider";
 const LoginEmail = () => {
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
+
+  const { signup } = useContext(LoginContext);
+
   const handleChange = ({ target: { name, value } }) => {
     setUser({ ...user, [name]: value });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(user);
     try {
       await signup(user.email, user.password);
     } catch (error) {
