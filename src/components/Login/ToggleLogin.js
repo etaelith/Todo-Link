@@ -1,14 +1,12 @@
 import { Switch } from "@headlessui/react";
-const ToggleAdmin = ({enabled,setEnabled}) => {
 
+const ToggleLogin = ({ enabled, setEnabled }) => {
   return (
-    <div className="flex flex-row justify-around py-4 pr-4 dark:text-white border-b-2 border-pinky">
-      <label
-        className={`${
-          enabled ? "bg-green-600" : "bg-orange-700"
-        } border-2 rounded-lg  p-2`}
+    <div className="flex flex-row justify-around py-4 pr-4 dark:text-white border-b-2 border-pinky mb-4">
+        <label
+        className="text-pinky"
       >
-        {enabled ? "Create" : "Edit"}
+        {enabled ? "Register" : "Login"}
       </label>
       <Switch
         checked={enabled}
@@ -27,4 +25,4 @@ const ToggleAdmin = ({enabled,setEnabled}) => {
   );
 };
 
-export default ToggleAdmin;
+export default ToggleLogin;

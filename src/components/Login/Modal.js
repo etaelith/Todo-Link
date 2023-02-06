@@ -1,8 +1,8 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useContext, useEffect, useState } from "react";
 import Buttons from "./Buttons";
-import LoginEmail from "./LoginEmail";
 import { LoginContext } from "../../context/UserProvider";
+import SwitchLogin from "./SwitchLogin";
 const Modal = () => {
   let [isOpen, setIsOpen] = useState(false);
 
@@ -55,13 +55,8 @@ const Modal = () => {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-gray-800 p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg text-center font-medium leading-6 text-pinky"
-                  >
-                    Login with
-                  </Dialog.Title>
-                  <LoginEmail />
+                 
+                  <SwitchLogin/>
                   <div className="mt-4">
                     <Buttons />
                   </div>

@@ -10,27 +10,29 @@ import {
   signOut,
   sendPasswordResetEmail,
 } from "firebase/auth";
-
+import { useRouter } from "next/navigation";
 import { auth } from "../firebase/firebase";
 
 export const LoginContext = createContext();
 
 const LoginProvider = ({ children }) => {
+  const router = useRouter();
+
   const [user, setUser] = useState(null);
+
   const signup = (email, password) => {
-    createUserWithEmailAndPassword(auth, email, password);
+    createUserWithEmailAndPassword(auth, email, password).catch((err) =>
+      console.log(err)
+    );
   };
 
   const login = async (email, password) => {
     // eslint-disable-next-line no-unused-vars
-    const userCredentials = await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
+    const userCredentials = signInWithEmailAndPassword(auth, email, password);
+   
   };
 
-  const logout = () => signOut(auth);
+  const logout = () => signOut(auth).catch((err) => console.log(err));
 
   const resetPassword = (email) => {
     sendPasswordResetEmail(auth, email);
@@ -65,9 +67,13 @@ const LoginProvider = ({ children }) => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       if (!currentUser) {
-        console.log("no user");
+        router.push("/");
       } else {
-        console.log(currentUser.email);
+        if (currentUser.email === process.env.ADMIN) {
+          router.push("/dashboard/admin");
+        } else {
+          router.push("/dashboard/user");
+        }
       }
     });
   }, []);
@@ -82,7 +88,7 @@ const LoginProvider = ({ children }) => {
         loginWithGoogle,
         loginWithTwitter,
         user,
-        setUser
+        setUser,
       }}
     >
       {children}

@@ -1,14 +1,14 @@
 import { useContext, useState } from "react";
 import { LoginContext } from "../../context/UserProvider";
 
-const LoginEmail = () => {
+const RegisterEmail = () => {
 
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
 
-  const { login } = useContext(LoginContext);
+  const { signup } = useContext(LoginContext);
 
   const handleChange = ({ target: { name, value } }) => {
     setUser({ ...user, [name]: value });
@@ -17,7 +17,7 @@ const LoginEmail = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login(user.email, user.password);
+      await signup(user.email, user.password);
     } catch (error) {
       console.log(error.message);
     }
@@ -80,11 +80,11 @@ const LoginEmail = () => {
           type="submit"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-2/3 sm:w-1/3 py-2.5 text-center dark:bg-pinky dark:hover:bg-pink-800 dark:focus:ring-pink-800"
         >
-          Log In
+          Register
         </button>
       </form>
     </>
   );
 };
 
-export default LoginEmail;
+export default RegisterEmail;
