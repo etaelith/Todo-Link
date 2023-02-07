@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { LoginContext } from "../context/UserProvider";
-import Home from "./Links/Home";
-import Modal from "./Login/Modal";
+import { LoginContext } from "@/context/UserProvider";
+import Home from "@components/Links/Home";
+import Modal from "@components/Login/Modal";
 
 const Header = () => {
   const { user } = useContext(LoginContext);

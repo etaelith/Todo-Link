@@ -11,7 +11,7 @@ import {
   sendPasswordResetEmail,
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import { auth } from "../firebase/firebase";
+import { auth } from "@firebase/firebase";
 
 export const LoginContext = createContext();
 
@@ -69,7 +69,7 @@ const LoginProvider = ({ children }) => {
       if (!currentUser) {
         router.push("/");
       } else {
-        if (currentUser.email === process.env.ADMIN) {
+        if (currentUser.email === 'etaelithtest@gmail.com') {
           router.push("/dashboard/admin");
         } else {
           router.push("/dashboard/user");

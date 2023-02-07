@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { LoginContext } from "../../context/UserProvider";
+import { LoginContext } from "@context/UserProvider";
 
 const LoginEmail = () => {
 

@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useContext, useEffect, useState } from "react";
 import Buttons from "./Buttons";
-import { LoginContext } from "../../context/UserProvider";
+import { LoginContext } from "@context/UserProvider";
 import SwitchLogin from "./SwitchLogin";
 const Modal = () => {
   let [isOpen, setIsOpen] = useState(false);
@@ -40,7 +40,7 @@ const Modal = () => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
+            <div className="fixed inset-0 bg-black bg-opacity-75" />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
