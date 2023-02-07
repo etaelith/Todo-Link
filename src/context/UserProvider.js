@@ -11,7 +11,8 @@ import {
   sendPasswordResetEmail,
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import { auth } from "@firebase/firebase";
+import { auth, db } from "@firebase/firebase";
+import { collection, addDoc, getDocs, query } from "firebase/firestore";
 
 export const LoginContext = createContext();
 
@@ -29,7 +30,7 @@ const LoginProvider = ({ children }) => {
   const login = async (email, password) => {
     // eslint-disable-next-line no-unused-vars
     const userCredentials = signInWithEmailAndPassword(auth, email, password);
-   
+    return userCredentials;
   };
 
   const logout = () => signOut(auth).catch((err) => console.log(err));
@@ -53,30 +54,59 @@ const LoginProvider = ({ children }) => {
     return signInWithPopup(auth, twitterProvider);
   };
 
-  const mapUser = (user) => {
-    const { displayName, email, uid } = user;
-
-    return {
-      username: displayName,
-      email,
-      uid,
-    };
-  };
-
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      console.log(currentUser);
       if (!currentUser) {
-        router.push("/");
+        router.replace("/");
       } else {
-        if (currentUser.email === 'etaelithtest@gmail.com') {
-          router.push("/dashboard/admin");
+        if (currentUser.email === "etaelithtest@gmail.com") {
+          router.replace("/dashboard/admin");
         } else {
-          router.push("/dashboard/user");
+          router.replace("/dashboard/user");
         }
       }
     });
   }, []);
+
+  const approveLink = async ({
+    name,
+    link,
+    youtube,
+    twitter,
+    imageURL,
+    category,
+    userID,
+  }) => {
+    try {
+      const docRef = await addDoc(collection(db, "links"), {
+        name,
+        link,
+        youtube,
+        twitter,
+        imageURL,
+        category,
+        userID,
+        createdAt: new Date(),
+        favs: 0,
+      });
+      return docRef;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const fetchLinks = async () => {
+    const getRef = query(collection(db, "links"));
+    const todoRef = await getDocs(getRef);
+    const lista = [];
+    todoRef.forEach((doc) => {
+      const data = doc.data();
+      const id = doc.id;
+      lista.push([id, data]);
+    });
+    return lista;
+  };
   return (
     <LoginContext.Provider
       value={{
@@ -89,6 +119,8 @@ const LoginProvider = ({ children }) => {
         loginWithTwitter,
         user,
         setUser,
+        approveLink,
+        fetchLinks,
       }}
     >
       {children}

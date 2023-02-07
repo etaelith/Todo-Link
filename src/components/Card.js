@@ -14,7 +14,7 @@ const Card = ({ link }) => {
 
       <div className="my-auto text-white">{link.name}</div>
       <div className="flex"><Link
-          href={link.instagram}
+          href={link.youtube}
           className="h-7 w-7 my-auto fill-pinky mr-2"
           target={"_blank"}
         >
