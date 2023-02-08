@@ -12,7 +12,13 @@ import {
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth, db } from "@firebase/firebase";
-import { collection, addDoc, getDocs, query } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  orderBy,
+} from "firebase/firestore";
 
 export const LoginContext = createContext();
 
@@ -57,19 +63,28 @@ const LoginProvider = ({ children }) => {
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      console.log(currentUser);
       if (!currentUser) {
-        router.replace("/");
+        console.log("Not user loged");
       } else {
-        if (currentUser.email === "etaelithtest@gmail.com") {
-          router.replace("/dashboard/admin");
-        } else {
-          router.replace("/dashboard/user");
-        }
+        console.log(`User loged`, currentUser);
       }
     });
   }, []);
-
+  const introduceLink = async ({ name, link, youtube, twitter, userID }) => {
+    try {
+      const docRef = await addDoc(collection(db, "linksUser"), {
+        name,
+        link,
+        youtube,
+        twitter,
+        userID,
+        createdAt: new Date(),
+      });
+      return docRef;
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const approveLink = async ({
     name,
     link,
@@ -97,13 +112,28 @@ const LoginProvider = ({ children }) => {
     }
   };
   const fetchLinks = async () => {
-    const getRef = query(collection(db, "links"));
+    const getRef = query(collection(db, "links"), orderBy("name", "asc"));
     const todoRef = await getDocs(getRef);
+
     const lista = [];
+
     todoRef.forEach((doc) => {
       const data = doc.data();
       const id = doc.id;
       lista.push([id, data]);
+    });
+    return lista;
+  };
+  const fetchUserLinks = async () => {
+    const getRef = query(collection(db, "linksUser"), orderBy("name", "asc"));
+    const todoRef = await getDocs(getRef);
+
+    const lista = [];
+
+    todoRef.forEach((doc) => {
+      const data = doc.data();
+      const id = doc.id;
+      lista.push([data, id]);
     });
     return lista;
   };
@@ -121,6 +151,8 @@ const LoginProvider = ({ children }) => {
         setUser,
         approveLink,
         fetchLinks,
+        introduceLink,
+        fetchUserLinks,
       }}
     >
       {children}
