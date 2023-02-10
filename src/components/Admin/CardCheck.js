@@ -1,4 +1,4 @@
-import { Fragment, useState, useRef, useContext, useEffect } from "react";
+import { Fragment, useState, useRef, useContext } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { LoginContext } from "@/context/UserProvider";
@@ -15,12 +15,12 @@ const category = [
   { id: 9, name: "Bet" },
 ];
 
-const CardCheck = ({ data }) => {
+const CardCheck = ({ link,youtube,twitter,name }) => {
   const { user, approveLink } = useContext(LoginContext);
 
   const [selected, setSelected] = useState(category[0]);
   const [query, setQuery] = useState("");
-  const [item, setItem] = useState(data);
+/*   const [item, setItem] = useState(data); */
   const formRef = useRef(null);
   const filteredPeople =
     query === ""
@@ -44,7 +44,7 @@ const CardCheck = ({ data }) => {
       userID: user.uid,
     });
   };
-
+  
   return (
     <form
       ref={formRef}
@@ -62,7 +62,7 @@ const CardCheck = ({ data }) => {
           <input
             type="text"
             name="name"
-            defaultValue={item.name}
+            defaultValue={name}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="John"
             required
@@ -78,7 +78,7 @@ const CardCheck = ({ data }) => {
           <input
             type="text"
             name="youtube"
-            defaultValue={item.youtube}
+            defaultValue={youtube}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Doe"
             required
@@ -94,7 +94,7 @@ const CardCheck = ({ data }) => {
           <input
             type="text"
             name="twitter"
-            defaultValue={item.twitter}
+            defaultValue={twitter}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Doe"
             required
@@ -125,7 +125,7 @@ const CardCheck = ({ data }) => {
           <input
             type="url"
             name="link"
-            defaultValue={item.link}
+            defaultValue={link}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="flowbite.com"
             required
@@ -212,7 +212,7 @@ const CardCheck = ({ data }) => {
       </div>
 
       <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-2/3 sm:w-1/3 py-2.5 text-center dark:bg-pinky dark:hover:bg-pink-800 dark:focus:ring-pink-800">
-        Submit
+        Approve
       </button>
     </form>
   );

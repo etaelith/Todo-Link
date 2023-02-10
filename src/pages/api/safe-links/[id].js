@@ -1,4 +1,4 @@
-import { firestore } from "@/firebase/admin";
+/* import { firestore } from "@/firebase/admin";
 
 export default (req, res) => {
   const { query } = req;
@@ -16,3 +16,4 @@ export default (req, res) => {
       res.status(404).end();
     });
 };
+ */

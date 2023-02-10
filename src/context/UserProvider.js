@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from "react"
 import {
   GithubAuthProvider,
   GoogleAuthProvider,
@@ -9,67 +9,68 @@ import {
   onAuthStateChanged,
   signOut,
   sendPasswordResetEmail,
-} from "firebase/auth";
-import { useRouter } from "next/navigation";
-import { auth, db } from "@firebase/firebase";
+} from "firebase/auth"
 import {
+  Timestamp,
   collection,
   addDoc,
   getDocs,
   query,
   orderBy,
-} from "firebase/firestore";
+  onSnapshot,
 
-export const LoginContext = createContext();
+} from "firebase/firestore"
+
+import { auth, db } from "@firebase/firebase"
+
+export const LoginContext = createContext()
 
 const LoginProvider = ({ children }) => {
-  const router = useRouter();
-
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null)
 
   const signup = (email, password) => {
     createUserWithEmailAndPassword(auth, email, password).catch((err) =>
       console.log(err)
-    );
-  };
+    )
+  }
 
   const login = async (email, password) => {
     // eslint-disable-next-line no-unused-vars
-    const userCredentials = signInWithEmailAndPassword(auth, email, password);
-    return userCredentials;
-  };
+    const userCredentials = signInWithEmailAndPassword(auth, email, password)
+    return userCredentials
+  }
 
-  const logout = () => signOut(auth).catch((err) => console.log(err));
+  const logout = () => signOut(auth).catch((err) => console.log(err))
 
   const resetPassword = (email) => {
-    sendPasswordResetEmail(auth, email);
-  };
+    sendPasswordResetEmail(auth, email)
+  }
 
   const loginWithGitHub = () => {
-    const githubProvider = new GithubAuthProvider();
-    return signInWithPopup(auth, githubProvider);
-  };
+    const githubProvider = new GithubAuthProvider()
+    return signInWithPopup(auth, githubProvider)
+  }
 
   const loginWithGoogle = () => {
-    const googleProvider = new GoogleAuthProvider();
-    return signInWithPopup(auth, googleProvider);
-  };
+    const googleProvider = new GoogleAuthProvider()
+    return signInWithPopup(auth, googleProvider)
+  }
 
   const loginWithTwitter = () => {
-    const twitterProvider = new TwitterAuthProvider();
-    return signInWithPopup(auth, twitterProvider);
-  };
+    const twitterProvider = new TwitterAuthProvider()
+    return signInWithPopup(auth, twitterProvider)
+  }
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+      setUser(currentUser)
       if (!currentUser) {
-        console.log("Not user loged");
+        console.log("Not user loged")
       } else {
-        console.log(`User loged`, currentUser);
+        console.log(`User loged`, currentUser)
       }
-    });
-  }, []);
+    })
+  }, [])
   const introduceLink = async ({ name, link, youtube, twitter, userID }) => {
     try {
       const docRef = await addDoc(collection(db, "linksUser"), {
@@ -78,13 +79,13 @@ const LoginProvider = ({ children }) => {
         youtube,
         twitter,
         userID,
-        createdAt: new Date(),
-      });
-      return docRef;
+        createdAt: Timestamp.fromDate(new Date()),
+      })
+      return docRef
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
+  }
   const approveLink = async ({
     name,
     link,
@@ -105,38 +106,53 @@ const LoginProvider = ({ children }) => {
         userID,
         createdAt: new Date(),
         favs: 0,
-      });
-      return docRef;
+      })
+      return docRef
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
-  };
-  const fetchLinks = async () => {
-    const getRef = query(collection(db, "links"), orderBy("name", "asc"));
-    const todoRef = await getDocs(getRef);
+  }
 
-    const lista = [];
+  /* const fetchLinks = async () => {
+    const getRef = query(collection(db, "links"), orderBy("name", "asc"))
+    const todoRef = await getDocs(getRef)
+
+    const lista = []
 
     todoRef.forEach((doc) => {
-      const data = doc.data();
-      const id = doc.id;
-      lista.push([id, data]);
-    });
-    return lista;
-  };
+      const data = doc.data()
+      const id = doc.id
+      lista.push([id, data])
+    })
+    return lista
+  } */
+
+  const listenLinks = (callback) => {
+    try {
+      const q = query(collection(db, "links"), orderBy("name", "asc"))
+      onSnapshot(q, (querySnapshot) => {
+        const newLinks = []
+        querySnapshot.forEach((doc) => {
+          newLinks.push(doc.data())
+        })
+        callback(newLinks)
+      })
+    } catch (err) {}
+  }
+
   const fetchUserLinks = async () => {
-    const getRef = query(collection(db, "linksUser"), orderBy("name", "asc"));
-    const todoRef = await getDocs(getRef);
+    const getRef = query(collection(db, "linksUser"), orderBy("name", "asc"))
+    const todoRef = await getDocs(getRef)
 
-    const lista = [];
+    const lista = []
 
     todoRef.forEach((doc) => {
-      const data = doc.data();
-      const id = doc.id;
-      lista.push([data, id]);
-    });
-    return lista;
-  };
+      const data = doc.data()
+      const id = doc.id
+      lista.push([data, id])
+    })
+    return lista
+  }
   return (
     <LoginContext.Provider
       value={{
@@ -150,13 +166,13 @@ const LoginProvider = ({ children }) => {
         user,
         setUser,
         approveLink,
-        fetchLinks,
+        listenLinks,
         introduceLink,
         fetchUserLinks,
       }}
     >
       {children}
     </LoginContext.Provider>
-  );
-};
-export default LoginProvider;
+  )
+}
+export default LoginProvider
