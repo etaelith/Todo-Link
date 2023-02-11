@@ -113,20 +113,6 @@ const LoginProvider = ({ children }) => {
     }
   }
 
-  /* const fetchLinks = async () => {
-    const getRef = query(collection(db, "links"), orderBy("name", "asc"))
-    const todoRef = await getDocs(getRef)
-
-    const lista = []
-
-    todoRef.forEach((doc) => {
-      const data = doc.data()
-      const id = doc.id
-      lista.push([id, data])
-    })
-    return lista
-  } */
-
   const listenLinks = (callback) => {
     try {
       const q = query(collection(db, "links"), orderBy("name", "asc"))

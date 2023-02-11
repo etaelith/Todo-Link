@@ -4,24 +4,21 @@ import Card from "./Card"
 import Loading from "./Loading"
 
 const Container = ({ filterLinks }) => {
-  const { listenLinks } = useContext(LoginContext)
+  const { listenLinks,user } = useContext(LoginContext)
   const [links, setLinks] = useState([])
   const [loading, setLoading] = useState(false)
   useEffect(() => {
     setLoading(true)
     try {
-      listenLinks((newLinks) => {
-        const newlink = newLinks
-        setLinks(newlink)
-      })
+      listenLinks(setLinks)
     } catch (err) {
       console.log(err)
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [user])
 
-   const filteredLinks =
+  const filteredLinks =
     filterLinks === ""
       ? links
       : links.filter((link) => {
