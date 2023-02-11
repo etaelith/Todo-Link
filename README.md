@@ -10,6 +10,7 @@ Bookmark of useful links used for avoid scams and shitty copy webs
 
 
 ### Next Steps
+```diff
 - Handle Errors
 - Better optimization
 
