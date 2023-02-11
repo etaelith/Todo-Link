@@ -4,10 +4,11 @@ Bookmark of useful links used for avoid scams and shitty copy webs
 ## Tecnologies
 * **NextJS**
 * **Firebase** 
+```dif
 + Firestore Database
 + Authentication
 + Firebase Admin
-
+```
 
 ### Next Steps
 ```diff
