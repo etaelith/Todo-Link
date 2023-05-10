@@ -123,7 +123,7 @@ const LoginProvider = ({ children }) => {
         })
         callback(newLinks)
       })
-    } catch (err) {}
+    } catch (err) { }
   }
 
   const fetchUserLinks = async () => {

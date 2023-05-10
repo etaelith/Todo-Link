@@ -4,20 +4,22 @@ import Link from "next/link";
 const Card = ({ link }) => {
   return (
     <div className="flex justify-between h-16 m-1 border-2 rounded-lg border-pinky">
-      <Image
-        src={link.imageURL}
-        width="48"
-        height="48"
-        className="my-auto ml-2"
-        alt={link.name}
-      ></Image>
+      <div className="relative my-auto w-12 h-12">
+
+        <Image
+          src={link.imageURL}
+          className="ml-2"
+          alt={link.name}
+          fill={true}
+        ></Image>
+      </div>
 
       <div className="my-auto text-white">{link.name}</div>
       <div className="flex"><Link
-          href={link.youtube}
-          className="h-7 w-7 my-auto fill-pinky mr-2"
-          target={"_blank"}
-        >
+        href={link.youtube}
+        className="h-7 w-7 my-auto fill-pinky mr-2"
+        target={"_blank"}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 448 512"

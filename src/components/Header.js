@@ -23,9 +23,8 @@ const Header = () => {
 
       <div className="flex items-center rounded-xl border border-pinky bg-pink-500 hover:bg-pink-600 hover:opacity-70 text-white p-2">
         <div
-          className={`${
-            !user ? "bg-black" : "bg-green-500"
-          } rounded-full h-3 w-3 mr-2`}
+          className={`${!user ? "bg-black" : "bg-green-500"
+            } rounded-full h-3 w-3 mr-2`}
         ></div>
 
         <Modal>Connect</Modal>

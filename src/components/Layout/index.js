@@ -4,7 +4,9 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header />
-      {children}
+      <div style={{ minHeight: "calc(100vh - 4rem)" }}>
+        {children}
+      </div>
     </>
   );
 };

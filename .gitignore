@@ -19,7 +19,7 @@
 # misc
 .DS_Store
 *.pem
-firebase-keys.json
+
 # debug
 npm-debug.log*
 yarn-debug.log*

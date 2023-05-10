@@ -6,7 +6,14 @@ import { getFirestore } from "firebase/firestore"
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-const firebaseConfig = JSON.parse(process.env.NEXT_PUBLIC_FIREBASE_CONFIG)
+const firebaseConfig = {
+    apiKey: "AIzaSyCQ3R_4UZQcy9AryjcjKusuuI80WZpcJ_E",
+    authDomain: "todo-link-f6b2d.firebaseapp.com",
+    projectId: "todo-link-f6b2d",
+    storageBucket: "todo-link-f6b2d.appspot.com",
+    messagingSenderId: "77147018685",
+    appId: "1:77147018685:web:2bc3173089a45d0765eed4"
+}
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
