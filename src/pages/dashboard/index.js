@@ -1,6 +1,6 @@
 import Admin from "@/components/dashboard/Admin";
 import NotUser from "@/components/dashboard/NotUser";
-import User from "@/components/dashboard/user";
+import User from "@/components/dashboard/User";
 import { LoginContext } from "@/context/UserProvider";
 import { useContext } from "react";
 const index = () => {
