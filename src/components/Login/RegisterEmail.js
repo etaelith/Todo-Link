@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { LoginContext } from "@context/UserProvider";
+import HandleError from "./HandleError";
 
 const RegisterEmail = () => {
 
@@ -8,6 +9,8 @@ const RegisterEmail = () => {
     password: "",
   });
 
+  const [errorMessage, setErrorMessage] = useState('')
+  const [showError, setShowError] = useState(false)
   const { signup } = useContext(LoginContext);
 
   const handleChange = ({ target: { name, value } }) => {
@@ -19,12 +22,18 @@ const RegisterEmail = () => {
     try {
       await signup(user.email, user.password);
     } catch (error) {
-      console.log(error.message);
+      setShowError(true);
+      setErrorMessage(error.code)
     }
   };
+  const closeError = () => {
+    setShowError(false);
+  };
+
+
   return (
     <>
-      
+
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center mx-8 border-b-4 border-pink-800 pb-4"
@@ -44,6 +53,7 @@ const RegisterEmail = () => {
             required
           ></input>
         </div>
+        {showError && <HandleError errorMessage={errorMessage} closeError={closeError} />}
         <div className="mb-6 w-full">
           <label
             htmlFor="password"

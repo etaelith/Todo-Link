@@ -1,22 +1,41 @@
-import { useContext} from "react";
+import { useContext, useState } from "react";
 
 import { LoginContext } from "@context/UserProvider";
+import HandleError from "./HandleError";
 
 const Buttons = ({ children, onClick }) => {
   const { loginWithGitHub, loginWithGoogle, loginWithTwitter } =
     useContext(LoginContext);
 
+  const [errorMessage, setErrorMessage] = useState('')
+  const [showError, setShowError] = useState(false)
   const handleClick = () => {
-    loginWithGitHub().catch((err) => console.log(err));
+    loginWithGitHub().catch((err) => {
+      console.log(err)
+      setErrorMessage(err.code)
+      setShowError(1)
+    });
   };
 
   const handleGoogle = () => {
-    loginWithGoogle().catch((err) => console.log(err));
+    loginWithGoogle().catch((err) => {
+      console.log(err)
+      setErrorMessage(err.code)
+      setShowError(3)
+    });
   };
 
   const handleTwitter = () => {
-    loginWithTwitter().catch((err) => console.log(err));
+    loginWithTwitter().catch((err) => {
+      console.log(err)
+      setErrorMessage(err.code)
+      setShowError(2)
+    });
   };
+  const closeError = () => {
+    setShowError(false);
+  };
+
 
   return (
     <div className="w-full">
@@ -43,6 +62,7 @@ const Buttons = ({ children, onClick }) => {
         </svg>
         Sign in with GitHub
       </button>
+      {showError === 1 && showError && <HandleError errorMessage={errorMessage} closeError={closeError} />}
       <button
         onClick={handleTwitter}
         type="button"
@@ -65,6 +85,8 @@ const Buttons = ({ children, onClick }) => {
         </svg>
         Sign in with Twitter
       </button>
+      {showError === 2 && showError && <HandleError errorMessage={errorMessage} closeError={closeError} />}
+
       <button
         onClick={handleGoogle}
         type="button"
@@ -87,6 +109,8 @@ const Buttons = ({ children, onClick }) => {
         </svg>
         Sign in with Google
       </button>
+      {showError === 3 && showError && <HandleError errorMessage={errorMessage} closeError={closeError} />}
+
     </div>
   );
 };

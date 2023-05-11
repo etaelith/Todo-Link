@@ -1,21 +1,26 @@
 # TodoLink
+
 Bookmark of useful links used for avoid scams and shitty copy webs
 
 ## Tecnologies
-* **[NextJS](https://nextjs.org/)**
-* **[Firebase](https://firebase.google.com/)** 
+
+- **[NextJS](https://nextjs.org/)**
+- **[Firebase](https://firebase.google.com/)**
+
 ```dif
 + Firestore Database
 + Authentication
 + Firebase Admin
++ Handle Errors
 ```
 
 ### Next Steps
+
 ```diff
-- Handle Errors
 - Better optimization
 ```
-****
+
+---
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 

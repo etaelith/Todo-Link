@@ -1,8 +1,11 @@
 import { useContext, useState } from "react";
 import { LoginContext } from "@context/UserProvider";
+import HandleError from "./HandleError";
 
 const LoginEmail = () => {
 
+  const [errorMessage, setErrorMessage] = useState('');
+  const [showError, setShowError] = useState(false);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -19,12 +22,17 @@ const LoginEmail = () => {
     try {
       await login(user.email, user.password);
     } catch (error) {
-      console.log(error.message);
+      setErrorMessage(error.code);
+      setShowError(true);
     }
   };
+  const closeError = () => {
+    setShowError(false);
+  };
+
   return (
     <>
-      
+
       <form
         onSubmit={handleSubmit}
         className="flex flex-col items-center mx-8 border-b-4 border-pink-800 pb-4"
@@ -58,6 +66,7 @@ const LoginEmail = () => {
             onChange={handleChange}
             required
           ></input>
+          {showError && <HandleError errorMessage={errorMessage} closeError={closeError} />}
         </div>
         <div className="flex items-start mb-6">
           <div className="flex items-center h-5">

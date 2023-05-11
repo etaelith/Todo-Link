@@ -6,6 +6,7 @@
       "@components/*":["./src/components/*"],
       "@firebase/*":["./src/firebase/*"],
       "@context/*":["./src/context/*"],
+      "@assets/*":["./src/assets/*"]
     }
   }
 }

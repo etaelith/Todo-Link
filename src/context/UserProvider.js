@@ -29,9 +29,9 @@ const LoginProvider = ({ children }) => {
   const [user, setUser] = useState(null)
 
   const signup = (email, password) => {
-    createUserWithEmailAndPassword(auth, email, password).catch((err) =>
-      console.log(err)
-    )
+    const createCredentials = createUserWithEmailAndPassword(auth, email, password)
+
+    return createCredentials
   }
 
   const login = async (email, password) => {
