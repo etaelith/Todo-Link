@@ -1,12 +1,13 @@
-import FIREBASE_KEYS from './FIREBASE_KEYS.js'
+
 const admin = require("firebase-admin")
-
-const serviceAccount = FIREBASE_KEYS;
-
+/* const serviceAccount = ; */
+const FIREBASE_KEYS = process.env.FIREBASE_TOTAL_KEY
 try {
+
   admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
+    credential: admin.credential.cert(JSON.parse(FIREBASE_KEYS)),
   })
+
 } catch (e) { console.log(e) }
 
 export const firestore = admin.firestore()
